@@ -1,21 +1,27 @@
-import { useEffect } from "react";
-import { socket } from "./socket";
-import "./App.css"
+import "./App.css";
+import { getSocket } from "./socket";
+import { useNavigate } from "react-router-dom";
 
 function App() {
-	useEffect(() => {
-		const onConnect = () => {
-			console.log("connected:", socket.id);
-		};
+	const navigate = useNavigate();
 
-		socket.on("connect", onConnect);
+	function createLobby() {
+		const socket = getSocket();
 
-		return () => {
-			socket.off("connect", onConnect);
-		};
-	}, []);
+		socket.once("lobbyCreated", (code) => {
+			navigate(`/lobby/${code}`);
+		});
 
-	return <div>Game</div>;
+		socket.emit("createLobby");
+	}
+
+	return (
+		<div>
+			<button onClick={createLobby}>
+				Create Lobby
+			</button>
+		</div>
+	);
 }
 
-export default App
+export default App;
