@@ -1,13 +1,19 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+
 import './index.css'
 import App from './App.tsx'
-import { BrowserRouter } from 'react-router-dom'
+import Lobby from './pages/lobby/Lobby.tsx'
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<BrowserRouter>
-			<App />
+			<Routes>
+				<Route path='/' index element={<App />} />
+				<Route path='/lobby/:code' index element={<Lobby />} />
+				<Route path="*" element={<Navigate to="/" replace />} />
+			</Routes>
 		</BrowserRouter>
 	</StrictMode>,
 )
