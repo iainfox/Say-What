@@ -22,6 +22,27 @@ function ensureNotInLobby(socket: any) {
 	io.to(code).emit("playerLeft", socket.id);
 }
 
+function changeUsername(socket:any, username: string) {
+	const lobby_code = LobbyManager.getLobbyFromPlayer(socket.id);
+	if (!lobby_code) return
+
+	const lobby = LobbyManager.getLobby(lobby_code)
+	if (!lobby) return
+
+	const player = lobby.players.filter((p) => p.socketId === socket.id)
+	if (!player[0]) return
+
+	player.map((p) => p.name = username);
+
+	if (lobby.host.socketId === socket.id) {
+		lobby.host.name = username
+	}
+
+	socket.emit("usernameChanged", username)
+
+	console.log(lobby);
+}
+
 io.on("connection", (socket) => {
 	socket.on("createLobby", () => {
 		ensureNotInLobby(socket);
@@ -58,6 +79,17 @@ io.on("connection", (socket) => {
 
 		io.to(code).emit("playerJoined", player);
 	});
+
+	socket.on("isValidLobby", (code: string) => {
+		if (LobbyManager.getLobby(code)) {
+			socket.emit("isValidLobby", true);
+		} else {
+			socket.emit("isValidLobby", false);
+		}
+	});
+
+	socket.on("changeUsername", (username: string) => changeUsername(socket, username));
+	socket.on("randomizeUsername", () => changeUsername(socket, Player.generateUsername()))
 });
 
 server.listen(3000, () => {

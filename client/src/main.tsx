@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import './index.css'
 import App from './App.tsx'
-import Lobby from './pages/lobby/Lobby.tsx'
+import Lobby from './pages/Lobby/Lobby.tsx'
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>

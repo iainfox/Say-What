@@ -5,14 +5,16 @@ class Player {
     socketId: string;
 
     constructor(socketId: string) {
-        const defaultName = uniqueNamesGenerator({
+        this.name = Player.generateUsername();
+        this.socketId = socketId;
+    }
+
+    public static generateUsername() {
+        return uniqueNamesGenerator({
             dictionaries: [adjectives, animals],
             separator: '',
             style: 'capital'
         }) + Math.floor(Math.random() * 1000);;
-        
-        this.name = defaultName;
-        this.socketId = socketId;
     }
 }
 
