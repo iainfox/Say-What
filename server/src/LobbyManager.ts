@@ -1,5 +1,5 @@
 import Lobby from "./Lobby.js";
-import Player from "./player.js";
+import Player from "./Player.js";
 
 class LobbyManager {
 	public lobbies: Map<string, Lobby> = new Map();
