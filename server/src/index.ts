@@ -6,6 +6,13 @@ import type {
     ServerToClientEvents,
     ClientToServerEvents,
 } from "../../shared/events.js";
+import {
+	changeUsername,
+	createLobby,
+	disconnect,
+	isValidLobby,
+	joinLobby
+} from "./handlers/LobbyHandler.js";
 
 const app = express();
 const server = createServer(app);
@@ -19,76 +26,12 @@ const io = new Server<
 	},
 });
 
-function ensureNotInLobby(socket: any) {
-	const code = LobbyManager.getLobbyFromPlayer(socket.id);
-	if (!code) return;
-
-	LobbyManager.removePlayer(socket.id);
-	socket.leave(code);
-	io.to(code).emit("playerLeft", socket.id);
-}
-
-function changeUsername(socket:any, username: string) {
-	const lobby_code = LobbyManager.getLobbyFromPlayer(socket.id);
-	if (!lobby_code) return
-
-	const lobby = LobbyManager.getLobby(lobby_code)
-	if (!lobby) return
-
-	const player = lobby.players.filter((p) => p.socketId === socket.id)
-	if (!player[0]) return
-
-	player.map((p) => p.name = username);
-
-	if (lobby.host.socketId === socket.id) {
-		lobby.host.name = username
-	}
-
-	socket.emit("usernameChanged", username)
-}
-
 io.on("connection", (socket) => {
-	socket.on("createLobby", () => {
-		ensureNotInLobby(socket);
+	socket.on("createLobby", () => createLobby(io, socket));
+	socket.on("disconnect", () => disconnect(io, socket));
 
-		let code = Math.random().toString(36).substring(2, 6).toUpperCase();
-		while (LobbyManager.getLobby(code) !== undefined) {
-			code = Math.random().toString(36).substring(2, 6).toUpperCase();
-		}
- 
-		const host = new Player(socket.id);
-		LobbyManager.createLobby(code, host);
-
-		socket.join(code);
-		socket.emit("lobbyCreated", code);
-	});
-
-	socket.on("disconnect", () => {
-		ensureNotInLobby(socket);
-	});
-
-	socket.on("joinLobby", (code: string) => {
-		ensureNotInLobby(socket);
-
-		const lobby = LobbyManager.getLobby(code);
-		if (!lobby) return;
-
-		const player = new Player(socket.id);
-
-		LobbyManager.addPlayer(code, player)
-
-		socket.join(code);
-
-		io.to(code).emit("playerJoined", player);
-	});
-
-	socket.on("isValidLobby", (code: string) => {
-		if (LobbyManager.getLobby(code)) {
-			socket.emit("isValidLobby", true);
-		} else {
-			socket.emit("isValidLobby", false);
-		}
-	});
+	socket.on("joinLobby", (code: string) => joinLobby(io, socket, code));
+	socket.on("isValidLobby", (code: string) => isValidLobby(socket, code));
 
 	socket.on("changeUsername", (username: string) => changeUsername(socket, username));
 	socket.on("randomizeUsername", () => changeUsername(socket, Player.generateUsername()))
