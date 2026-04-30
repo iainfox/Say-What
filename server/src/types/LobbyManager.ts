@@ -54,7 +54,9 @@ class LobbyManager {
 		this.lobbies.delete(code);
 	}
 
-	addPlayer(code: string, player: Player) {
+	addPlayer(code: string, origin: string) {
+		const player = new Player(origin);
+
 		const lobby = this.lobbies.get(code);
 		if (!lobby) return;
 
