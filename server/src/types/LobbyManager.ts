@@ -2,12 +2,13 @@ import Lobby from "./Lobby.js";
 import Player from "./Player.js";
 
 class LobbyManager {
-	public lobbies: Map<string, Lobby> = new Map();
+	private lobbies: Map<string, Lobby> = new Map();
 	private playerLobbyMap: Map<string, string> = new Map();
 
 	createLobby(code: string, host: Player) {
 		const lobby = new Lobby(code, host);
 		this.lobbies.set(code, lobby);
+		this.playerLobbyMap.set(host.socketId, code)
 		
 		return lobby;
 	}

@@ -1,8 +1,8 @@
 import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import Player from "./Player.js";
-import LobbyManager from "./LobbyManager.js";
+import Player from "./types/Player.js";
+import LobbyManager from "./types/LobbyManager.js";
 
 const app = express();
 const server = createServer(app);
