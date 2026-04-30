@@ -39,8 +39,6 @@ function changeUsername(socket:any, username: string) {
 	}
 
 	socket.emit("usernameChanged", username)
-
-	console.log(lobby);
 }
 
 io.on("connection", (socket) => {
@@ -57,8 +55,6 @@ io.on("connection", (socket) => {
 
 		socket.join(code);
 		socket.emit("lobbyCreated", code);
-
-		console.log(LobbyManager.lobbies);
 	});
 
 	socket.on("disconnect", () => {
