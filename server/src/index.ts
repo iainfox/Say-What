@@ -2,11 +2,17 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import Player from "./types/Player.js";
-import LobbyManager from "./types/LobbyManager.js";
+import type {
+    ServerToClientEvents,
+    ClientToServerEvents,
+} from "../../shared/events.js";
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server, {
+const io = new Server<
+    ClientToServerEvents,
+    ServerToClientEvents
+>(server, {
 	cors: {
 		origin: "http://localhost:5173",
 		methods: ["GET", "POST"],
