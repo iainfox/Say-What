@@ -5,7 +5,9 @@ class LobbyManager {
 	private lobbies: Map<string, Lobby> = new Map();
 	private playerLobbyMap: Map<string, string> = new Map();
 
-	createLobby(code: string, host: Player) {
+	createLobby(code: string, origin: string) {
+		const host = new Player(origin);
+
 		const lobby = new Lobby(code, host);
 		this.lobbies.set(code, lobby);
 		this.playerLobbyMap.set(host.socketId, code)
