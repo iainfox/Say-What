@@ -1,7 +1,7 @@
 import type { Server, Socket } from "socket.io";
 import LobbyManager from "../types/LobbyManager.js";
 
-function ensureNotInLobby(io: Server, socket: Socket) {
+function leaveCurrentLobby(io: Server, socket: Socket) {
     const code = LobbyManager.getLobbyFromPlayer(socket.id);
     if (!code) return;
 
@@ -30,7 +30,7 @@ export function changeUsername(socket: Socket, username: string) {
 }
 
 export function createLobby(io: Server, socket: Socket) {
-    ensureNotInLobby(io, socket);
+    leaveCurrentLobby(io, socket);
 
     let code = Math.random().toString(36).substring(2, 6).toUpperCase();
     while (LobbyManager.getLobby(code) !== undefined) {
@@ -44,7 +44,7 @@ export function createLobby(io: Server, socket: Socket) {
 }
 
 export function joinLobby(io: Server, socket: Socket, code: string) {
-    ensureNotInLobby(io, socket);
+    leaveCurrentLobby(io, socket);
 
     const lobby = LobbyManager.getLobby(code);
     if (!lobby) return;
@@ -65,5 +65,5 @@ export function isValidLobby(socket: Socket, code: string) {
 }
 
 export function disconnect(io: Server, socket: Socket) {
-    ensureNotInLobby(io, socket);
+    leaveCurrentLobby(io, socket);
 }
