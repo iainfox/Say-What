@@ -67,14 +67,16 @@
 }
 
 .username-input,
-.username-randomizer {
+.username-randomizer,
+.confirm-username {
     box-sizing: border-box;
     height: 2rem;
     font-size: 1rem;
     line-height: 1;
 }
 
-.username-randomizer {
+.username-randomizer,
+.confirm-username {
     width: 2rem;
     aspect-ratio: 1 / 1;
 
