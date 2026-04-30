@@ -1,0 +1,21 @@
+.lobby-header {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+
+    width: 100%;
+    height: fit-content;
+
+    padding: 15px;
+
+    background-color: var(--social-bg);
+}
+
+.lobby-header .logo {
+    text-align: start;
+}
+
+.lobby-header .title {
+    text-align: center;
+    margin: 0;
+}

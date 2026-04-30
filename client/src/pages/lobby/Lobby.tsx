@@ -5,9 +5,13 @@ function Lobby() {
     const { code } = useParams();
 
     return (
-        <div>
-            <h1>Lobby: {code}</h1>
-        </div>
+        <>
+            <header className={"lobby-header"}>
+                <span className='logo'>Say What Logo</span>
+
+                <h2 className='title'>Lobby Code: {code}</h2>
+            </header>
+        </>
     );
 }
 
