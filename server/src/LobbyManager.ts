@@ -8,7 +8,6 @@ class LobbyManager {
 	createLobby(code: string, host: Player) {
 		const lobby = new Lobby(code, host);
 		this.lobbies.set(code, lobby);
-		this.addPlayer(code, host);
 		
 		return lobby;
 	}
