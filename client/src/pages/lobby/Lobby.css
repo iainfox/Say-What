@@ -49,6 +49,17 @@
     margin: auto auto;
 }
 
+.name-selector h2 {
+    margin: 0;
+}
+
+.name-selector hr {
+    width: 95%;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background-color: var(--border);
+}
+
 .username-input-group {
     display: flex;
 

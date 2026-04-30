@@ -50,6 +50,7 @@ function Lobby() {
 
             <div className='name-selector'>
                 <h2>Say What?!</h2>
+                <hr />
                 <div className='username-input-group'>
                     <input className='username-input' autoComplete='username' id="username" type="text" value={username} onChange={usernameChanged} onBlur={() => socket.emit("changeUsername", username)} placeholder='Enter a username' />
                     <button className='username-randomizer' aria-label='Randomize Username' onClick={randomizeUsername}>
