@@ -1,4 +1,15 @@
+.lobby-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+}
+
 .lobby-header {
+    box-sizing: border-box;
+
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(3, 1fr);
@@ -18,4 +29,45 @@
 .lobby-header .title {
     text-align: center;
     margin: 0;
+}
+
+.name-selector {
+    display: flex;
+    flex-direction: column;
+
+    padding: 15px;
+    border: solid 1px var(--border);
+    border-radius: 15px;
+
+    background-color: var(--social-bg);
+
+    text-align: center;
+    margin: auto auto;
+}
+
+.username-input-group {
+    display: flex;
+
+    gap: 5px;
+}
+
+.username-input,
+.username-randomizer {
+    box-sizing: border-box;
+    height: 2rem;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.username-randomizer {
+    width: 2rem;
+    aspect-ratio: 1 / 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.username-randomizer svg {
+    fill: var(--text-h);
 }
