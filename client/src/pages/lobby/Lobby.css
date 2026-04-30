@@ -71,7 +71,3 @@
     align-items: center;
     justify-content: center;
 }
-
-.username-randomizer svg {
-    fill: var(--text-h);
-}
