@@ -9,7 +9,7 @@ import type {
 import {
 	changeUsername,
 	createLobby,
-	disconnect,
+	leaveCurrentLobby,
 	isValidLobby,
 	joinLobby
 } from "./handlers/LobbyHandler.js";
@@ -28,7 +28,7 @@ const io = new Server<
 
 io.on("connection", (socket) => {
 	socket.on("createLobby", () => createLobby(io, socket));
-	socket.on("disconnect", () => disconnect(io, socket));
+	socket.on("disconnect", () => leaveCurrentLobby(io, socket));
 
 	socket.on("joinLobby", (code: string) => joinLobby(io, socket, code));
 	socket.on("isValidLobby", (code: string) => isValidLobby(socket, code));
